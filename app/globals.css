@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #142539;
+  --color-ink-deep: #0d1826;
+  --color-panel: #1b3049;
+  --color-panel-soft: #1f3650;
+  --color-paper: #f4eee0;
+  --color-ink-soft: #92a5bb;
+  --color-ink-faint: #5e7187;
+  --color-amber: #d9a441;
+  --color-teal: #4fa39b;
+
+  --animate-spin-slow: spin-slow 140s linear infinite;
+  --animate-ping-slow: ping-slow 2.2s ease-out infinite;
+}
+
+/* Map next/font CSS variables (set on <html> in app/layout.tsx) into the
+   Tailwind theme so utilities like font-display / font-body / font-mono
+   are available everywhere. */
+@theme inline {
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-work-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink text-paper font-body antialiased;
+  }
+  ::selection {
+    @apply bg-amber text-ink-deep;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+@layer utilities {
+  /* Faint topographic contour pattern used behind the hero */
+  .bg-contours {
+    background-image:
+      repeating-radial-gradient(
+        circle at 18% 25%,
+        transparent 0,
+        transparent 38px,
+        rgba(244, 238, 224, 0.045) 39px,
+        rgba(244, 238, 224, 0.045) 40px,
+        transparent 41px
+      ),
+      repeating-radial-gradient(
+        circle at 82% 70%,
+        transparent 0,
+        transparent 46px,
+        rgba(79, 163, 155, 0.06) 47px,
+        rgba(79, 163, 155, 0.06) 48px,
+        transparent 49px
+      );
+  }
+
+  /* Dashed vertical line connecting the journey waypoints */
+  .bg-route-dashes {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(244, 238, 224, 0.13) 0 6px,
+      transparent 6px 12px
+    );
+  }
+
+  /* Conic-gradient ring around the portrait photo */
+  .bg-portrait-ring {
+    background: var(--color-amber);
+    background: conic-gradient(
+      from 200deg,
+      var(--color-amber),
+      var(--color-teal),
+      var(--color-amber)
+    );
+  }
+}
